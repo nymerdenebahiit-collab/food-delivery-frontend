@@ -1,0 +1,19 @@
+import * as React from "react"
+const AddBlack = ({className, ...props}) => (
+  <svg
+    xmlns="http://www.w3.org/2000/svg"
+    width={11}
+    height={11}
+    fill="none"
+    {...props}
+    className={className}
+  >
+    <path
+      stroke="#09090B"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      d="M5.167.5v9.333M.5 5.167h9.333"
+    />
+  </svg>
+)
+export default AddBlack
