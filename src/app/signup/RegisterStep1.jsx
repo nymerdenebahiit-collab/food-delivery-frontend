@@ -21,7 +21,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 
-const UserFormStepOne = () => {
+export const RegisterStep1 = () => {
   return (
     <div className="flex gap-12 items-center justify-center">
       <div className="w-full max-w-md">
@@ -48,5 +48,3 @@ const UserFormStepOne = () => {
     </div>
   );
 };
-
-export default UserFormStepOne;
