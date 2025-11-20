@@ -1,8 +1,9 @@
 "use client";
 
-import ChevronLeft from "../Components/Vectors/ChevronLeft";
+import Backbutton from "../components/Backbutton";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
+
 import {
   Field,
   FieldDescription,
@@ -13,46 +14,21 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
-
-import { useFormikContext } from "formik";
-
-const Step1 = () => {
-  const {
-    values,
-    errors,
-    touched,
-    handleChange,
-    handleBlur,
-  } = useFormikContext();
-
+const Step2 = ({ setStep }) => {
   return (
     <div className="flex gap-12 items-center justify-center">
       <div className="w-104 pl-25">
-
         <FieldSet>
           <FieldGroup className="gap-6">
-            <div
-              aria-label="Button to go back"
-              className=" w-8 h-8 flex items-center justify-center  border-[#E4E4E7] border rounded-md"
-            >
-              <ChevronLeft />
-            </div>
+            <Backbutton />
 
             <Field>
               <FieldLabel className="text-[24px] text-[#09090B] font-semibold">
-                Create your account
+                Create a strong password
               </FieldLabel>
 
               <FieldDescription className="text-[16px] font-400 text-[#71717A]">
-                Sign up to explore your favorite dishes.
+                Create a strong password with letters, numbers.
               </FieldDescription>
             </Field>
             <Input
@@ -60,30 +36,25 @@ const Step1 = () => {
               name="email"
               type="text"
               placeholder="Enter your email address"
-              value={values.email}
-              onChange={handleChange}
-              onBlur={handleBlur}
+              // value={values.email}
+              // onChange={handleChange}
+              // onBlur={handleBlur}
             />
 
-         
-            {errors.email && touched.email && (
+            {/* {errors.email && touched.email && (
               <div className="text-red-500 text-sm">{errors.email}</div>
-            )}
+            )} */}
 
- <Button type="submit">
-  <div>Lets Go</div>
-</Button>
-
+            <Button type="submit">
+              <div>Lets Go</div>
+            </Button>
 
             <div
               aria-label="Section to login"
               className="flex items-center justify-center text-[16px] gap-3"
             >
               Already have an account?{" "}
-              <a
-                href="http://localhost:3000/login"
-                className="text-[#2563EB]"
-              >
+              <a href="http://localhost:3000/login" className="text-[#2563EB]">
                 Log in
               </a>
             </div>
@@ -99,4 +70,4 @@ const Step1 = () => {
   );
 };
 
-export default Step1;
+export default Step2;

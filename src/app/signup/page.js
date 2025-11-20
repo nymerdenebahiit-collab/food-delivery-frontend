@@ -1,45 +1,43 @@
 "use client";
 
 import { useState } from "react";
-import { Formik, Form } from "formik";
+
 import * as Yup from "yup";
 
-import Step1 from "./step1";
-import Step2 from "./step2";
+import Step1 from "./_features/step1";
+import Step2 from "./_features/step2";
+import { useFormik } from "formik";
+import { email } from "zod";
 
 const Register = () => {
   const [step, setStep] = useState(1);
-
-
-  const stepValidationSchemas = {
-    1: Yup.object({
-      email: Yup.string()
-        .email("Invalid email")
-        .required("Email is required"),
-    }),
-    2: Yup.object({}), 
+  const increaseStep = () => {
+    setStep((prev) => prev + 1);
   };
 
+  const decreaseStep = () => {
+    setStep((prev) => prev - 1);
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      email: "",
+      password: "",
+      confrimPassword: "",
+    },
+
+    validationSchema,
+
+    onSubmit: (values) => {
+      alert(JSON.stringify(values, null, 2));
+    },
+  });
+
   return (
-    <Formik
-      initialValues={{
-        email: "",
-      }}
-      validationSchema={stepValidationSchemas[step]}
-      onSubmit={(values, { setSubmitting }) => {
-        if (step === 1) {
-          setStep(2); 
-        } else {
-          console.log("Final submit:", values);
-        }
-        setSubmitting(false);
-      }}
-    >
-      <Form>
-        {step === 1 && <Step1 />}
-        {step === 2 && <Step2 setStep={setStep} />}
-      </Form>
-    </Formik>
+    <div>
+      {step === 1 && <Step1 decreaseStep={decreaseStep} />}
+      {step === 2 && <Step2 decreaseStep={decreaseStep} />}
+    </div>
   );
 };
 
