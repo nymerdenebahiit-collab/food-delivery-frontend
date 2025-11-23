@@ -1,8 +1,7 @@
 "use client";
 
-import ChevronLeft from "../../components/vectors/ChevronLeft";
 import { Button } from "@/components/ui/button";
-import { Checkbox } from "@/components/ui/checkbox";
+
 import {
   Field,
   FieldDescription,
@@ -19,7 +18,6 @@ import Backbutton from "../components/Backbutton";
 const Step1 = ({ decreaseStep, increaseStep, formik }) => {
   const handleNext = (e) => {
     e.preventDefault();
-    // Validate only email field before proceeding
     formik.setFieldTouched("email", true);
     formik.validateField("email").then((error) => {
       if (!error && formik.values.email) {

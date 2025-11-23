@@ -65,7 +65,6 @@ const Register = () => {
 
         setSuccess(true);
         alert("Registration successful! Welcome aboard!");
-        // Redirect to login page
         window.location.href = "http://localhost:3000/login";
       } catch (err) {
         setError(err.message);
