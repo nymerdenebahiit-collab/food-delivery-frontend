@@ -1,4 +1,4 @@
-import ChevronLeft from "../../Components/Vectors/ChevronLeft";
+import ChevronLeft from "../../components/vectors/ChevronLeft";
 
 const Backbutton = () => {
   return (

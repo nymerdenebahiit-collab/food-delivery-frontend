@@ -1,6 +1,6 @@
 "use client";
 
-import ChevronLeft from "../../Components/Vectors/ChevronLeft";
+import ChevronLeft from "../../components/vectors/ChevronLeft";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import {
@@ -16,7 +16,20 @@ import { Input } from "@/components/ui/input";
 
 import Backbutton from "../components/Backbutton";
 
-const Step1 = ({ decreaseStep }) => {
+const Step1 = ({ decreaseStep, increaseStep, formik }) => {
+  const handleNext = (e) => {
+    e.preventDefault();
+    // Validate only email field before proceeding
+    formik.setFieldTouched("email", true);
+    formik.validateField("email").then((error) => {
+      if (!error && formik.values.email) {
+        increaseStep();
+      }
+    });
+  };
+
+  const { values, errors, touched, handleChange, handleBlur } = formik;
+
   return (
     <div className="flex gap-12 items-center justify-center">
       <div className="w-104 pl-25">
@@ -32,19 +45,22 @@ const Step1 = ({ decreaseStep }) => {
                 Sign up to explore your favorite dishes.
               </FieldDescription>
             </Field>
+
             <Input
               id="email"
               name="email"
-              type="text"
+              type="email"
               placeholder="Enter your email address"
-              // value={values.email}
+              value={values.email}
+              onChange={handleChange}
+              onBlur={handleBlur}
             />
 
-            {/* {errors.email && touched.email && (
+            {errors.email && touched.email && (
               <div className="text-red-500 text-sm">{errors.email}</div>
-            )} */}
+            )}
 
-            <Button type="submit">
+            <Button type="submit" onClick={handleNext}>
               <div>Lets Go</div>
             </Button>
 

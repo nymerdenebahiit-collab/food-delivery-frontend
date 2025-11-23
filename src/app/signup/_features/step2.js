@@ -14,13 +14,19 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-const Step2 = ({ setStep }) => {
+
+const Step2 = ({ decreaseStep, formik, loading }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    formik.handleSubmit();
+  };
+
   return (
     <div className="flex gap-12 items-center justify-center">
       <div className="w-104 pl-25">
         <FieldSet>
           <FieldGroup className="gap-6">
-            <Backbutton />
+            <Backbutton onClick={decreaseStep} />
 
             <Field>
               <FieldLabel className="text-[24px] text-[#09090B] font-semibold">
@@ -31,22 +37,39 @@ const Step2 = ({ setStep }) => {
                 Create a strong password with letters, numbers.
               </FieldDescription>
             </Field>
+
             <Input
-              id="email"
-              name="email"
-              type="text"
-              placeholder="Enter your email address"
-              // value={values.email}
-              // onChange={handleChange}
-              // onBlur={handleBlur}
+              id="password"
+              name="password"
+              type="password"
+              placeholder="Enter your password"
+              value={formik.values.password}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
             />
 
-            {/* {errors.email && touched.email && (
-              <div className="text-red-500 text-sm">{errors.email}</div>
-            )} */}
+            {formik.errors.password && formik.touched.password && (
+              <div className="text-red-500 text-sm">{formik.errors.password}</div>
+            )}
 
-            <Button type="submit">
-              <div>Lets Go</div>
+            <Input
+              id="confirmPassword"
+              name="confirmPassword"
+              type="password"
+              placeholder="Confirm your password"
+              value={formik.values.confirmPassword}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+            />
+
+            {formik.errors.confirmPassword && formik.touched.confirmPassword && (
+              <div className="text-red-500 text-sm">
+                {formik.errors.confirmPassword}
+              </div>
+            )}
+
+            <Button type="button" onClick={handleSubmit} disabled={loading}>
+              <div>{loading ? "Creating Account..." : "Create Account"}</div>
             </Button>
 
             <div

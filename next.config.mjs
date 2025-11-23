@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   /* config options here */
-  reactCompiler: true,
   webpack: (config, { isServer }) => {
     // Disable case-sensitive paths
     config.resolve.symlinks = false;
