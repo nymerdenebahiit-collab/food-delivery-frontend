@@ -14,6 +14,7 @@ const Footer = () => {
         <span>Fresh fast delivered</span>
         <span>Fresh fast delivered</span>
         <span>Fresh fast delivered</span>
+        
       </div>
     </div>
   );

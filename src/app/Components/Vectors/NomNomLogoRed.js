@@ -1,5 +1,5 @@
 import * as React from "react"
-const SvgComponent = ({className,...props}) => (
+const NomNomLogoRed = ({className,...props}) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     width={46}
@@ -15,4 +15,4 @@ const SvgComponent = ({className,...props}) => (
     />
   </svg>
 )
-export default SvgComponent
+export default NomNomLogoRed
