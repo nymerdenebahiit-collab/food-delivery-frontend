@@ -1,5 +1,7 @@
- const login = () => {
-    return( <div>Hello from login</div>)
+"use client";
+
+const login = () => {
+  return <div>Hello from login</div>;
 };
 
-export default login
+export default login;

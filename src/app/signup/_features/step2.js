@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 
-const Step2 = ({ decreaseStep, formik, loading }) => {
+const Step2 = ({ formik, loading, step, setStep }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     formik.handleSubmit();
@@ -26,7 +26,7 @@ const Step2 = ({ decreaseStep, formik, loading }) => {
       <div className="w-104 pl-25">
         <FieldSet>
           <FieldGroup className="gap-6">
-            <Backbutton onClick={decreaseStep} />
+            <Backbutton step={step} setStep={setStep} />
 
             <Field>
               <FieldLabel className="text-[24px] text-[#09090B] font-semibold">
@@ -49,7 +49,9 @@ const Step2 = ({ decreaseStep, formik, loading }) => {
             />
 
             {formik.errors.password && formik.touched.password && (
-              <div className="text-red-500 text-sm">{formik.errors.password}</div>
+              <div className="text-red-500 text-sm">
+                {formik.errors.password}
+              </div>
             )}
 
             <Input
@@ -62,11 +64,12 @@ const Step2 = ({ decreaseStep, formik, loading }) => {
               onBlur={formik.handleBlur}
             />
 
-            {formik.errors.confirmPassword && formik.touched.confirmPassword && (
-              <div className="text-red-500 text-sm">
-                {formik.errors.confirmPassword}
-              </div>
-            )}
+            {formik.errors.confirmPassword &&
+              formik.touched.confirmPassword && (
+                <div className="text-red-500 text-sm">
+                  {formik.errors.confirmPassword}
+                </div>
+              )}
 
             <Button type="button" onClick={handleSubmit} disabled={loading}>
               <div>{loading ? "Creating Account..." : "Create Account"}</div>

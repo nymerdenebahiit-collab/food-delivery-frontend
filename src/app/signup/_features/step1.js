@@ -15,7 +15,7 @@ import { Input } from "@/components/ui/input";
 
 import Backbutton from "../components/Backbutton";
 
-const Step1 = ({ decreaseStep, increaseStep, formik }) => {
+const Step1 = ({ formik, step, setStep }) => {
   const handleNext = (e) => {
     e.preventDefault();
     formik.setFieldTouched("email", true);
@@ -33,7 +33,6 @@ const Step1 = ({ decreaseStep, increaseStep, formik }) => {
       <div className="w-104 pl-25">
         <FieldSet>
           <FieldGroup className="gap-6">
-            <Backbutton onClick={decreaseStep} />
             <Field>
               <FieldLabel className="text-[24px] text-[#09090B] font-semibold">
                 Create your account
@@ -58,7 +57,7 @@ const Step1 = ({ decreaseStep, increaseStep, formik }) => {
               <div className="text-red-500 text-sm">{errors.email}</div>
             )}
 
-            <Button type="submit" onClick={handleNext}>
+            <Button type="submit" onClick={() => setStep(2)}>
               <div>Lets Go</div>
             </Button>
 

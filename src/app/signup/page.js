@@ -26,14 +26,6 @@ const Register = () => {
   const [error, setError] = useState("");
   const [success, setSuccess] = useState(false);
 
-  const increaseStep = () => {
-    setStep((prev) => prev + 1);
-  };
-
-  const decreaseStep = () => {
-    setStep((prev) => prev - 1);
-  };
-
   const formik = useFormik({
     initialValues: {
       email: "",
@@ -46,7 +38,8 @@ const Register = () => {
       setError("");
 
       try {
-        const response = await fetch("http://localhost:3001/user", {
+        //The local host's port number must be the same as one inside your backend folder
+        const response = await fetch("http://localhost:999/user", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -78,19 +71,15 @@ const Register = () => {
   return (
     <div>
       {step === 1 && (
-        <Step1
-          decreaseStep={decreaseStep}
-          increaseStep={increaseStep}
-          formik={formik}
-          error={error}
-        />
+        <Step1 formik={formik} error={error} step={step} setStep={setStep} />
       )}
       {step === 2 && (
         <Step2
-          decreaseStep={decreaseStep}
           formik={formik}
           loading={loading}
           error={error}
+          set={step}
+          setStep={setStep}
         />
       )}
     </div>
