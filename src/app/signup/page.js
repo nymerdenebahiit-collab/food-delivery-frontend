@@ -39,19 +39,22 @@ const Register = () => {
 
       try {
         //The local host's port number must be the same as one inside your backend folder
-        const response = await fetch("http://localhost:999/user", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            email: values.email,
-            password: values.password,
-          }),
-        });
+        const response = await fetch(
+          "http://localhost:999/authentication/signup",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              email: values.email,
+              password: values.password,
+            }),
+          }
+        );
 
         const data = await response.json();
-         console.log(data, "DATADATADATADATADATA")
+        console.log(data, "DATADATADATADATADATA");
 
         if (!response.ok) {
           throw new Error(data || "Failed to register");
@@ -60,7 +63,6 @@ const Register = () => {
         setSuccess(true);
         alert("Registration successful! Welcome aboard!");
         window.location.href = "http://localhost:3000/login";
-      
       } catch (err) {
         setError(err.message);
         alert(`Registration failed: ${err.message}`);

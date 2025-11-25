@@ -1,4 +1,4 @@
-import ChevronLeft from "../../Components/Vectors/ChevronLeft";
+import ChevronLeft from "../../Components/Icons/ChevronLeft";
 import page from "../page";
 
 const Backbutton = ({ step, setStep }) => {
