@@ -90,7 +90,7 @@ const Step2 = ({ formik, loading, step, setStep }) => {
 
       <div
         aria-label="Image for user form"
-        className="bg-[url(./Components/Images/UserFormImage.png)] bg-center bg-no-repeat w-[856px] h-[904px] rounded-md pr-5"
+        className="bg-[url(./_components/images/UserFormImage.png)]  bg-center bg-no-repeat w-[856px] h-[904px] rounded-md pr-5"
       ></div>
     </div>
   );
