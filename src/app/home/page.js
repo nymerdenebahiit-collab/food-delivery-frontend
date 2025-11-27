@@ -2,7 +2,7 @@ import Header from "./_features/header";
 import Footer from "./_features/footer";
 import { Menu } from "./_features/menu";
 import HeaderLoggedIn from "./_features/header(logged in)";
-import { Card } from "./_features/card";
+import { Card } from "../_components/card";
 
 const Home = () => {
   return (

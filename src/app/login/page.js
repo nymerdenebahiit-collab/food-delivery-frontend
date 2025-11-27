@@ -12,6 +12,7 @@ import {
   FieldSet,
 } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
+import { axios } from "axios";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -35,44 +36,37 @@ const Login = () => {
       setError("");
 
       try {
-        // Adjust the port number to match your backend
-        const response = await fetch(
-          "http://localhost:999/authentication/login",
+        // Send a POST request to the login endpoint with email and password
+        const response = await axios.post(
+          "http://localhost:999/authentication/login", // Backend login URL
           {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              email: values.email,
-              password: values.password,
-            }),
+            email: values.email, // User's email from form
+            password: values.password, // User's password from form
           }
         );
 
-        // Check if response is JSON
-        const contentType = response.headers.get("content-type");
+        // Check if the response is JSON format
+        // If not, throw an error (server might have crashed or returned HTML error page)
         if (!contentType || !contentType.includes("application/json")) {
           throw new Error(
             "Server error: Invalid response format. Please check your backend endpoint."
           );
         }
 
-        const data = await response.json();
+        // Log the response data to console for debugging
         console.log(data, "LOGIN RESPONSE DATA");
 
-        if (!response.ok) {
-          throw new Error(data.message || "Failed to login");
-        }
-
-        // Store authentication token if provided
+        // If server sent back a token (for authentication)
+        // Save it to browser's localStorage so user stays logged in
         if (data.token) {
           localStorage.setItem("authToken", data.token);
         }
 
+        // Show success message
         alert("Login successful! Welcome back!");
-        // Redirect to dashboard or home page
-        window.location.href = "http://localhost:3000/dashboard";
+
+        // Redirect user to dashboard page
+        window.location.href = "http://localhost:3000/home";
       } catch (err) {
         console.error("Login error:", err);
         setError(err.message);

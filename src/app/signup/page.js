@@ -5,6 +5,7 @@ import * as Yup from "yup";
 import Step1 from "./_features/step1";
 import Step2 from "./_features/step2";
 import { useFormik } from "formik";
+import axios from "axios";
 
 const validationSchema = Yup.object({
   email: Yup.string()
@@ -34,39 +35,35 @@ const Register = () => {
     },
     validationSchema,
     onSubmit: async (values) => {
+      // After clicking the submit button, we are making it load until everything below here finished running.
       setLoading(true);
+      // We're setting an error message here
       setError("");
-
       try {
-        //The local host's port number must be the same as one inside your backend folder
-        const response = await fetch(
+        // It's connecting to backend.
+        const response = await axios.post(
           "http://localhost:999/authentication/signup",
           {
-            method: "POST",
+            email: values.email,
+            password: values.password,
+          },
+          {
             headers: {
-              "Content-Type": "application/json",
+              "Content-type": "application.json",
             },
-            body: JSON.stringify({
-              email: values.email,
-              password: values.password,
-            }),
           }
         );
 
-        const data = await response.json();
-        console.log(data, "DATADATADATADATADATA");
-
-        if (!response.ok) {
-          throw new Error(data || "Failed to register");
-        }
-
+        // If no error occured while connecting, it will mark it as "success" and do the codes below setSuccess(true)
         setSuccess(true);
         alert("Registration successful! Welcome aboard!");
         window.location.href = "http://localhost:3000/login";
       } catch (err) {
+        // However, if something wrong happened when trying to connect with backend, setError(err.message) will capture the error message and display it through alert
         setError(err.message);
         alert(`Registration failed: ${err.message}`);
       } finally {
+        // Regardless of failiure or success. Once the code finished running, it will no longer be in loading state
         setLoading(false);
       }
     },

@@ -1,4 +1,4 @@
-import { Card } from "./card";
+import { Card } from "../../_components/card";
 import { Submenu } from "../_components/submenu";
 
 export const Menu = () => {
