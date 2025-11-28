@@ -1,12 +1,25 @@
-import { Card } from "../_components/card";
+"use client";
+
 import { Button } from "@/components/ui/button";
+import { Dishmenu } from "./_components/dishmenu";
+import { useState } from "react";
 const Admin = () => {
+  const [activeFoodMenuButton, setActiveFoodMenuButton] = useState(false);
+  const [activeOrderButton, setActiveOrderButton] = useState(false);
+  const [totalFoodNumber, setTotalFoodNumber] = useState(0);
+  const [categoryName, setCategoryName] = useState(``);
+  const { activePopUpMenu, setActivePopUpMenu } = useState(false);
+
   return (
     <div
-      className="w-[1440px] bg-[#F4F4F5 flex
+      className="w-[1440px] bg-[#F4F4F5 flex gap-1
     ]"
     >
-      <div aria-label="Navigation" className="flex  flex-col py-9 px-5 gap-10">
+      <div
+        aria-label="Navigation"
+        className="flex flex-col py-9 px-5 gap-10 items-center"
+        onClick={() => setActiveFoodMenuButton(!activeFoodMenuButton)}
+      >
         <div
           aria-label="Logo and Slogan section"
           className="flex gap-2 items-center"
@@ -33,23 +46,102 @@ const Admin = () => {
             </p>
           </div>
         </div>
-        <Button> </Button>
-        <Button> </Button>
+        <div
+          aria-label="Food Menu"
+          className={`flex gap-2.5 px-6 py-2 items-center cursor-pointer 
+        ${
+          activeFoodMenuButton
+            ? "text-[#09090B]"
+            : "text-white bg-[#18181B] rounded-full"
+        }`}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="18"
+            height="18"
+            viewBox="0 0 18 18"
+            fill="none"
+          >
+            <path
+              d="M6 0.5H1.41667C0.910406 0.5 0.5 0.910406 0.5 1.41667V7.83333C0.5 8.33959 0.910406 8.75 1.41667 8.75H6C6.50626 8.75 6.91667 8.33959 6.91667 7.83333V1.41667C6.91667 0.910406 6.50626 0.5 6 0.5Z"
+              stroke={activeFoodMenuButton ? "#09090B" : "#FFF"}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M16.0833 0.5H11.5C10.9937 0.5 10.5833 0.910406 10.5833 1.41667V4.16667C10.5833 4.67293 10.9937 5.08333 11.5 5.08333H16.0833C16.5896 5.08333 17 4.67293 17 4.16667V1.41667C17 0.910406 16.5896 0.5 16.0833 0.5Z"
+              stroke={activeFoodMenuButton ? "#09090B" : "#FFF"}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              d="M16.0833 8.75H11.5C10.9937 8.75 10.5833 9.16041 10.5833 9.66667V16.0833C10.5833 16.5896 10.9937 17 11.5 17H16.0833C16.5896 17 17 16.5896 17 16.0833V9.66667C17 9.16041 16.5896 8.75 16.0833 8.75Z"
+              stroke={activeFoodMenuButton ? "#09090B" : "#FFF"}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+            <path
+              //   E4E4E7
+              d="M6 12.4167H1.41667C0.910406 12.4167 0.5 12.8271 0.5 13.3333V16.0833C0.5 16.5896 0.910406 17 1.41667 17H6C6.50626 17 6.91667 16.5896 6.91667 16.0833V13.3333C6.91667 12.8271 6.50626 12.4167 6 12.4167Z"
+              stroke={activeFoodMenuButton ? "#09090B" : "#FFF"}
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+          </svg>
+          <p>Food Menu</p>
+        </div>
+        <div
+          aria-label="Orders of users"
+          className={`flex gap-2.5 px-6 py-2 items-center cursor-pointer
+            
+            ${
+              activeOrderButton
+                ? "text-[#09090B]"
+                : "text-white bg-[#18181B] rounded-full"
+            }
+                    `}
+          onClick={() => setActiveOrderButton(!activeOrderButton)}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="20"
+            height="15"
+            viewBox="0 0 20 15"
+            fill="none"
+          >
+            <path
+              d="M7.83333 11.5H11.5M11.5 11.5V0.5H0.5V11.5H3.25M11.5 11.5H12.4167M17 11.5H18.8333V8.43833C18.8337 7.95668 18.7392 7.47967 18.5552 7.03455C18.3711 6.58944 18.1012 6.18494 17.7608 5.84417L16.0833 4.16667H11.5M7.83333 11.9583C7.83333 13.224 6.80732 14.25 5.54167 14.25C4.27601 14.25 3.25 13.224 3.25 11.9583C3.25 10.6927 4.27601 9.66667 5.54167 9.66667C6.80732 9.66667 7.83333 10.6927 7.83333 11.9583ZM17 11.9583C17 13.224 15.974 14.25 14.7083 14.25C13.4427 14.25 12.4167 13.224 12.4167 11.9583C12.4167 10.6927 13.4427 9.66667 14.7083 9.66667C15.974 9.66667 17 10.6927 17 11.9583Z"
+              stroke={activeOrderButton ? "#09090B" : "#FFF"}
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <p>Order</p>
+        </div>
       </div>
       <div
         aria-label="All dishes and their category"
-        className="flex flex-col bg-[#E4E4E5]"
+        className="flex flex-col bg-[#E4E4E5] gap-5"
       >
         <div
           aria-label="Dishes category"
-          className="mt-21 rounded-xl bg-[#FFF] p-6 flex flex-col gap-4"
+          className="mt-21 rounded-xl bg-[#FFF] p-6 flex flex-col mx-5"
         >
-          <p>Dishes category</p>
-          <div>
-            <Button />
-          </div>
+          <p className="text-xl font-semibold text-[#09090B]">
+            Dishes category
+          </p>
+          <button className="rounded-full px-4 py-2  border-[#71717A] flex gap-2">
+            {categoryName}
+
+            <div className="bg-[#18181B] text-[12px] font-semibold rounded-full px-2.5 text-[#FAFAFA] py-0.5">
+              {totalFoodNumber}
+            </div>
+          </button>
         </div>
-        <div aria-label="The dishes"></div>
+        <div aria-label="The dishes">
+          <Dishmenu title="Appetizers" />
+          <Dishmenu title="Salads" />
+        </div>
       </div>
     </div>
   );
