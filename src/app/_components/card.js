@@ -3,26 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 
-const UPLOAD_PRESET = "food-delivery";
-const CLOUD_NAME = "drcvqzzm4";
-
 export const Card = () => {
-  const [logoUrl, setLogoUrl] = useState("");
-  const [uploading, setUploading] = useState(false);
-  const uploadToCloudinary = async (file) => {
-    console.log(file);
-    const formData = new FormData();
-    formData.append("file", file);
-    formData.append("upload_preset", UPLOAD_PRESET);
-  };
-
-  try {
-    const response = axios.post(
-      `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/image/upload`
-    );
-  } catch (err) {
-    console.error("Cloudinary upload failed:", err);
-  }
+  const [isAdmin, setIsAdmin] = useState(false);
+  const [isAddedToCart, setIsAddedToCart] = useState(false);
 
   return (
     <div className="w-full">
@@ -32,9 +15,9 @@ export const Card = () => {
       >
         <div
           aria-label="Card's image"
-          className="w-80 h-[170px] bg-blue-500 bg-no-repeat bg-center"
+          className="w-80 h-[170px] bg-blue-500 bg-no-repeat bg-center p-5"
         >
-          <div className="rounded-full h-11 w-11 py-2 px-4 flex items-center justify-center bg-white">
+          <div className="rounded-full h-11 w-11 py-2 px-4 flex items-center justify-center bg-white ml-59 mt-21.5 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="16"
