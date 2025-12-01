@@ -1,18 +1,67 @@
 "use client";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
+import { DeliveryBadge } from "../_components/deliverybadge";
 
-export const Order = () => {
+export const Order = ({
+  deliveryBadgeClicked,
+  setDeliveryBadgeClicked,
+  deliveryButtonClicked,
+  setDeliveryButtonClicked,
+}) => {
   const [totalItems, setTotalItems] = useState(0);
+  const [totalOrders, setTotalOrders] = useState(1);
+  const handleDeliveryButton = () => {
+    setDeliveryButtonClicked(!deliveryButtonClicked);
+    console.log("This handleDeliveryButton is working");
+  };
+
+  const header = [
+    {
+      key: "checkbox",
+      content: <Checkbox className="border-[#09090B] cursor-pointer" />,
+    },
+    { key: "number", content: `№` },
+    { key: "customer", content: `Customer` },
+    { key: "food", content: `Food` },
+    { key: "date", content: `Date` },
+    { key: "cost amount", content: `Total` },
+    { key: "address", content: `Delivery Address` },
+    { key: "status", content: `Delivery State` },
+  ];
+
+  const dummyData = [
+    {
+      key: "checkbox",
+      content: <Checkbox className="border-[#09090B] cursor-pointer" />,
+    },
+    { key: "number", content: `1` },
+    { key: "customer", content: `Naraa` },
+    { key: "food", content: `Pizza` },
+    { key: "date", content: `2024/12/20` },
+    { key: "cost amount", content: `$19.00` },
+    {
+      key: "address",
+      content: `2024/12/СБД, 12-р хороо, СБД нэгдсэн эмнэлэг Sbd negdsen `,
+    },
+    {
+      key: "status",
+      content: (
+        <DeliveryBadge
+          setDeliveryBadgeClicked={setDeliveryBadgeClicked}
+          deliveryBadgeClicked={deliveryBadgeClicked}
+        />
+      ),
+    },
+  ];
 
   return (
     <div className="m-6">
       <div
         aria-label="The Order container"
-        className="flex flex-col gap-6 bg-[#F4F4F5] w-[1171px] p-4 border border-[#E4E4E7] rounded-md"
+        className="flex flex-col bg-[#FFF] w-[1171px] border border-[#e5e4e6] rounded-md"
       >
-        <div aria-label="Header" className="flex justify-between">
-          {" "}
+        <div aria-label="Header" className="flex justify-between p-4">
           <div aria-label="Header info" className="flex flex-col ">
             <p className="text-xl text-[#09090B] font-semibold">Orders</p>
             <p className="text-xs text-[#71717B]">{totalItems}</p>
@@ -39,25 +88,37 @@ export const Order = () => {
                 13 June 2023 - 14 July 2023
               </p>
             </div>
-            <div
+            <button
               aria-label="Delivery state changer"
-              className="py-2 px-4 flex items-center bg-[#d1d1d1] rounded-full"
+              className="py-2 px-4 flex items-center bg-[#d1d1d1] rounded-full cursor-pointer"
+              onClick={handleDeliveryButton}
             >
               <p className="text-sm font-medium text-[#fafafa]">
                 Change delivery state
               </p>
-            </div>
+            </button>
           </div>
         </div>
+
         <div
           aria-label="Table-row and their details"
-          className="flex gap-8
-        bg-[#F4F4F5]"
+          className="grid grid-cols-8 grid-rows-12 bg-[#E4E4E7]"
         >
-          {" "}
-          <Checkbox className="border-[#18181B]" />
-          <p className="text-sm text-[#09090B]">№</p>
-          <p className="text-sm text-[#71717A]">Customer</p>
+          {header.map((item) => (
+            <div
+              key={item.key}
+              className="text-sm text-[#71717A] font-medium p-4 "
+            >
+              {item.content}
+            </div>
+          ))}
+
+          {dummyData.map((item) => (
+            <div key={item.key}>{item.content} </div>
+          ))}
+          {dummyData.map((item) => (
+            <div key={item.key}>{item.content} </div>
+          ))}
         </div>
       </div>
     </div>
