@@ -77,10 +77,13 @@ export const OrderTest = () => {
 
         <div
           aria-label="Table-row and their details"
-          className="grid grid-cols-8 grid-rows-12 bg-[#E4E4E7] p-4"
+          className="grid grid-cols-8 grid-rows-12 bg-[#E4E4E7]"
         >
           {header.map((item) => (
-            <div key={item.key} className="text-sm text-[#71717A] font-medium">
+            <div
+              key={item.key}
+              className="text-sm text-[#71717A] font-medium p-4 "
+            >
               {item.content}
             </div>
           ))}

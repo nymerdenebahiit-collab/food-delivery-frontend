@@ -4,12 +4,17 @@ import { useState } from "react";
 import { FoodMenu } from "./_features/foodmenu";
 import { Order } from "./_features/order";
 import { OrderTest } from "./_features/order copy";
-const Admin = () => {
+const Admin = ({}) => {
   const [orderMenu, setOrderMenu] = useState(true);
   const [foodMenu, setFoodMenu] = useState(false);
+  const [activePopUpMenu, setActivePopUpMenu] = useState(false);
 
   return (
-    <div className="w-[1440px] bg-[#f5f4f5] flex">
+    <div
+      className={`w-[1440px] flex ${
+        activePopUpMenu ? `brightness-75` : `bg-[#f4f4f5]`
+      }`}
+    >
       <div
         aria-label="Navigation"
         className="flex flex-col py-9 px-5 gap-10 items-center bg-[#FAFAFA]"
@@ -120,7 +125,12 @@ const Admin = () => {
         </div>
       </div>
 
-      {foodMenu && !orderMenu && <FoodMenu />}
+      {foodMenu && !orderMenu && (
+        <FoodMenu
+          activePopUpMenu={activePopUpMenu}
+          setActivePopUpMenu={setActivePopUpMenu}
+        />
+      )}
       {/* {orderMenu && !foodMenu && <Order />} */}
       {orderMenu && !foodMenu && <OrderTest />}
     </div>
