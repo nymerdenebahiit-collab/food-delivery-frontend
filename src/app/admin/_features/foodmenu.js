@@ -8,6 +8,8 @@ export const FoodMenu = ({
   setActivePopUpMenu,
   addDishClicked,
   setAddDishClicked,
+  isEditDishClicked,
+  setEditDishClicked,
 }) => {
   const [totalFoodNumber, setTotalFoodNumber] = useState(0);
   // For now, using hard code for categoryies. Later on, it needs to be dynamic, and added or removed from backend
@@ -85,6 +87,8 @@ export const FoodMenu = ({
           foodCounter={foodCounter}
           addDishClicked={addDishClicked}
           setAddDishClicked={setAddDishClicked}
+          setEditDishClicked={setEditDishClicked}
+          isEditDishClicked={isEditDishClicked}
         />
         <Dishmenu title="Salads" foodCounter={foodCounter} />
       </div>

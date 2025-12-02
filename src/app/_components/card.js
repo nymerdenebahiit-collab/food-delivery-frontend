@@ -5,10 +5,16 @@ import Image from "next/image";
 
 export const Card = ({
   isAdmin,
-  setIsAdmin,
+
   isAddedToCart,
-  setIsAddedToCart,
+
+  setEditDishClicked,
 }) => {
+  const handleEdit = () => {
+    setEditDishClicked(true);
+    console.log(`handleEdit is working`);
+  };
+
   return (
     <div className="w-full">
       <div
@@ -20,12 +26,14 @@ export const Card = ({
           className="w-80 h-[170px] bg-blue-500 bg-no-repeat bg-center p-5"
         >
           <div
-            className={`rounded-full h-11 w-11 py-2 px-4 flex items-center justify-center ml-59 mt-21.5 ${
+            className={`cursor-pointer rounded-full h-11 w-11 py-2 px-4 flex items-center justify-center ml-59 mt-21.5 ${
               isAdmin ? `bg-white` : isAddedToCart ? `bg-[#18181B]` : `bg-white`
             } `}
+            onClick={isAdmin ? handleEdit : undefined}
           >
             {isAdmin && !isAddedToCart && (
               <svg
+                className="cursor-pointer"
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
                 height="16"

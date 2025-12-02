@@ -6,9 +6,13 @@ export const Dishmenu = ({
   foodCounter,
   addDishClicked,
   setAddDishClicked,
+  isEditDishClicked,
+  setEditDishClicked,
 }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(true);
+
+  const colLimit = 6;
 
   const addDish = () => {
     setAddDishClicked(!addDishClicked);
@@ -26,7 +30,7 @@ export const Dishmenu = ({
       >
         <button
           aria-label="Add new dish to a category"
-          className="flex flex-col gap-6 items-center justify-center py-2 px-4 border border-dashed border-red-500 h-[310px]  rounded-[20px]  "
+          className="cursor-pointer flex flex-col gap-6 items-center justify-center py-2 px-4 border border-dashed border-red-500 h-[310px]  rounded-[20px]  "
           onClick={addDish}
         >
           <div
@@ -57,6 +61,8 @@ export const Dishmenu = ({
           isAddedToCart={false}
           setIsAdmin={setIsAdmin}
           setIsAddedToCart={setIsAddedToCart}
+          isEditDishClicked={isEditDishClicked}
+          setEditDishClicked={setEditDishClicked}
         />
       </div>
     </div>

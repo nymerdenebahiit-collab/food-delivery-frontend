@@ -2,15 +2,29 @@
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DeliveryBadge } from "../_components/deliverybadge";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationEllipsis,
+  PaginationItem,
+  PaginationLink,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
 
-export const Order = ({
-  deliveryBadgeClicked,
-  setDeliveryBadgeClicked,
-  deliveryButtonClicked,
-  setDeliveryButtonClicked,
-}) => {
+export const Order = ({ deliveryButtonClicked, setDeliveryButtonClicked }) => {
   const [totalItems, setTotalItems] = useState(0);
   const [totalOrders, setTotalOrders] = useState(1);
+  const [deliveryBadgeClicked, setDeliveryBadgeClicked] = useState(false);
+
   const handleDeliveryButton = () => {
     setDeliveryButtonClicked(!deliveryButtonClicked);
     console.log("This handleDeliveryButton is working");
@@ -56,7 +70,7 @@ export const Order = ({
   ];
 
   return (
-    <div className="m-6">
+    <div className="m-6 flex flex-col ">
       <div
         aria-label="The Order container"
         className="flex flex-col bg-[#FFF] w-[1171px] border border-[#e5e4e6] rounded-md"
@@ -121,6 +135,22 @@ export const Order = ({
           ))}
         </div>
       </div>
+      <Pagination className="ml-115">
+        <PaginationContent>
+          <PaginationItem>
+            <PaginationPrevious href="#" />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationLink href="#">1</PaginationLink>
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationEllipsis />
+          </PaginationItem>
+          <PaginationItem>
+            <PaginationNext href="#" />
+          </PaginationItem>
+        </PaginationContent>
+      </Pagination>
     </div>
   );
 };
