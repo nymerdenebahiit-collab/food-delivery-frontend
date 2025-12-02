@@ -3,7 +3,12 @@
 import { Dishmenu } from "../_components/dishmenu";
 import { useState } from "react";
 
-export const FoodMenu = ({ activePopUpMenu, setActivePopUpMenu }) => {
+export const FoodMenu = ({
+  activePopUpMenu,
+  setActivePopUpMenu,
+  addDishClicked,
+  setAddDishClicked,
+}) => {
   const [totalFoodNumber, setTotalFoodNumber] = useState(0);
   // For now, using hard code for categoryies. Later on, it needs to be dynamic, and added or removed from backend
   const [categories, setCategories] = useState([
@@ -18,7 +23,7 @@ export const FoodMenu = ({ activePopUpMenu, setActivePopUpMenu }) => {
   const addCategory = () => {
     setActivePopUpMenu(!activePopUpMenu);
   };
-  //
+
   return (
     <div
       aria-label="All dishes and their category"
@@ -29,9 +34,11 @@ export const FoodMenu = ({ activePopUpMenu, setActivePopUpMenu }) => {
         className="mt-21 rounded-xl bg-[#FFF] p-6 gap-4 flex flex-col mx-6"
       >
         <p className="text-xl font-semibold text-[#09090B]">Dishes category</p>
+
         <div
           aria-label="Category button grid"
-          className="grid grid-cols-6 gap-3"
+          className="grid grid-cols-6 gap-3 w-fit"
+          // Fix the gap distance between the buttons
         >
           <button className="rounded-full px-4 py-2 border border-[#EF4444] flex gap-2 w-fit cursor-pointer">
             All Dishes
@@ -73,7 +80,12 @@ export const FoodMenu = ({ activePopUpMenu, setActivePopUpMenu }) => {
         </div>
       </div>
       <div aria-label="The dishes" className="flex flex-col gap-5 mx-6">
-        <Dishmenu title="Appetizers" foodCounter={foodCounter} />
+        <Dishmenu
+          title="Appetizers"
+          foodCounter={foodCounter}
+          addDishClicked={addDishClicked}
+          setAddDishClicked={setAddDishClicked}
+        />
         <Dishmenu title="Salads" foodCounter={foodCounter} />
       </div>
     </div>

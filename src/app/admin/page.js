@@ -5,15 +5,13 @@ import { FoodMenu } from "./_features/foodmenu";
 import { Order } from "./_features/order";
 import { useRouter } from "next/navigation";
 const Admin = () => {
-  const handleDeliveryButton = () => {
-    setDeliveryButtonClicked(!deliveryButtonClicked);
-    console.log("This handleDeliveryButton is working");
-  };
   const [orderMenu, setOrderMenu] = useState(true);
   const [foodMenu, setFoodMenu] = useState(false);
   const [activePopUpMenu, setActivePopUpMenu] = useState(false);
   const [deliveryBadgeClicked, setDeliveryBadgeClicked] = useState(false);
   const [deliveryButtonClicked, setDeliveryButtonClicked] = useState(false);
+  const [addDishClicked, setAddDishClicked] = useState(false);
+
   const router = useRouter();
   const goToHomePage = () => {
     router.push(`/home`);
@@ -32,6 +30,7 @@ const Admin = () => {
         <div
           aria-label="Navigation"
           className="flex flex-col py-9 px-5 gap-10 items-center bg-[#FAFAFA]"
+          //Fix the width changing when switching two different menus
         >
           <div
             aria-label="Logo and Slogan section"
@@ -144,6 +143,8 @@ const Admin = () => {
           <FoodMenu
             activePopUpMenu={activePopUpMenu}
             setActivePopUpMenu={setActivePopUpMenu}
+            addDishClicked={addDishClicked}
+            setAddDishClicked={setAddDishClicked}
           />
         )}
         {orderMenu && !foodMenu && (
@@ -256,6 +257,12 @@ const Admin = () => {
 
       {deliveryBadgeClicked && orderMenu && (
         <div className="fixed inset-0 flex items-center justify-center">1</div>
+      )}
+
+      {addDishClicked && foodMenu && (
+        <div className="fixed inset-0 flex items-center justify-center">
+          <div className=""></div>
+        </div>
       )}
     </>
   );
