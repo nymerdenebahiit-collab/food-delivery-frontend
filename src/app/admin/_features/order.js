@@ -1,5 +1,6 @@
 "use client";
 import { useState } from "react";
+import * as React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import { DeliveryBadge } from "../_components/deliverybadge";
 import {
@@ -9,6 +10,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
+  DropdownMenuRadioItem,
+  DropdownMenuRadioGroup,
 } from "@/components/ui/dropdown-menu";
 import {
   Pagination,
@@ -19,14 +22,30 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from "@/components/ui/pagination";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Ham } from "lucide-react";
 
-export const Order = ({ deliveryButtonClicked, setDeliveryButtonClicked }) => {
+export const Order = () => {
   const [totalItems, setTotalItems] = useState(0);
   const [totalOrders, setTotalOrders] = useState(1);
   const [deliveryBadgeClicked, setDeliveryBadgeClicked] = useState(false);
+  const [isDeliveryButtonClicked, setIsDeliveryButtonClicked] = useState(false);
+  const [position, setPosition] = React.useState("bottom");
 
   const handleDeliveryButton = () => {
-    setDeliveryButtonClicked(!deliveryButtonClicked);
+    setIsDeliveryButtonClicked(!isDeliveryButtonClicked);
     console.log("This handleDeliveryButton is working");
   };
 
@@ -51,7 +70,19 @@ export const Order = ({ deliveryButtonClicked, setDeliveryButtonClicked }) => {
     },
     { key: "number", content: `1` },
     { key: "customer", content: `Naraa` },
-    { key: "food", content: `Pizza` },
+    {
+      key: "food",
+      content: (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">Open</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
+    },
     { key: "date", content: `2024/12/20` },
     { key: "cost amount", content: `$19.00` },
     {
@@ -61,10 +92,14 @@ export const Order = ({ deliveryButtonClicked, setDeliveryButtonClicked }) => {
     {
       key: "status",
       content: (
-        <DeliveryBadge
-          setDeliveryBadgeClicked={setDeliveryBadgeClicked}
-          deliveryBadgeClicked={deliveryBadgeClicked}
-        />
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">Open</Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
+          </DropdownMenuContent>
+        </DropdownMenu>
       ),
     },
   ];
@@ -128,13 +163,52 @@ export const Order = ({ deliveryButtonClicked, setDeliveryButtonClicked }) => {
           ))}
 
           {dummyData.map((item) => (
-            <div key={item.key}>{item.content} </div>
+            <div className="p-4 flex items-center" key={item.key}>
+              {item.content}{" "}
+            </div>
           ))}
-          {dummyData.map((item) => (
+          {/* {dummyData.map((item) => (
             <div key={item.key}>{item.content} </div>
-          ))}
+          ))} */}
         </div>
       </div>
+
+      <Dialog
+        aria-label="The Dialog that appears when Delivery Button is clicked "
+        open={isDeliveryButtonClicked}
+        onOpenChange={setIsDeliveryButtonClicked}
+      >
+        <DialogContent className=" flex flex-col w-91">
+          <DialogHeader>
+            <DialogTitle className="text-lg text-[#09090B ] font-semibold">
+              Change delivery state
+            </DialogTitle>
+          </DialogHeader>
+
+          <div aria-label="Buttons" className="flex gap-4 ">
+            <button className="border py-2 px-2.5 bg-[#F4F4F5] rounded-full hover:bg-[#E11D48]/10  hover:border-red-500 hover:text-red-500 cursor-pointer ">
+              Delivered
+            </button>
+            <button className="border py-2 px-2.5 bg-[#F4F4F5] rounded-full hover:bg-[#E11D48]/10  hover:border-red-500 hover:text-red-500 cursor-pointer">
+              Pending
+            </button>
+            <button className="border py-2 px-2.5 bg-[#F4F4F5] rounded-full hover:bg-[#E11D48]/10  hover:border-red-500  hover:text-red-500 cursor-pointer">
+              Cancelled
+            </button>
+          </div>
+
+          <DialogFooter>
+            <Button
+              type="submit"
+              className="w-full cursor-pointer rounded-full"
+              onClick={handleDeliveryButton}
+            >
+              Save changes
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
       <Pagination className="ml-115">
         <PaginationContent>
           <PaginationItem>

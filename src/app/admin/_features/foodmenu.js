@@ -3,6 +3,20 @@
 import { Dishmenu } from "../_components/dishmenu";
 import { useState } from "react";
 
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+
 export const FoodMenu = ({
   activePopUpMenu,
   setActivePopUpMenu,
@@ -91,6 +105,29 @@ export const FoodMenu = ({
           isEditDishClicked={isEditDishClicked}
         />
         <Dishmenu title="Salads" foodCounter={foodCounter} />
+
+        <Dialog
+          aria-label="Add Category"
+          open={activePopUpMenu}
+          onOpenChange={setActivePopUpMenu}
+        >
+          <form>
+            <DialogContent className="w-115">
+              <DialogHeader>
+                <DialogTitle className="text-lg text-[#09090B] font-semibold">
+                  Add new category
+                </DialogTitle>
+              </DialogHeader>
+              <Input type="category name" placeholder="Type category name.." />
+              <DialogFooter>
+                <DialogClose asChild></DialogClose>
+                <Button type="submit" className="rounded-md">
+                  Add category
+                </Button>
+              </DialogFooter>
+            </DialogContent>
+          </form>
+        </Dialog>
       </div>
     </div>
   );

@@ -2,16 +2,40 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 
 export const Card = ({
   isAdmin,
 
   isAddedToCart,
-
-  setEditDishClicked,
+  dishName,
+  cost,
+  overview,
 }) => {
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+
   const handleEdit = () => {
-    setEditDishClicked(true);
+    setIsDialogOpen(!isDialogOpen);
     console.log(`handleEdit is working`);
   };
 
@@ -91,11 +115,84 @@ export const Card = ({
             aria-label="Dish name and price"
             className="flex justify-between"
           >
-            <p>Dummy Dish Name</p>
-            <p>$12.99</p>
+            <p>{dishName}</p>
+            <p>{cost}</p>
           </div>
-          <p>Dummy description</p>
+          <p>{overview}</p>
         </div>
+
+        <Dialog
+          aria-label="Dialog when Edit dish button is clicked"
+          open={isDialogOpen}
+          onOpenChange={setIsDialogOpen}
+        >
+          <DialogContent className="sm:max-w-[472px] flex flex-col">
+            <DialogHeader>
+              <DialogTitle className="text-lg font-semibold text-[#09090B]">
+                Dishes info
+              </DialogTitle>
+            </DialogHeader>
+            <div className="flex flex-col gap-3">
+              <div aria-label="Dish name editor" className="flex gap-4">
+                <p> Dish name</p>
+                <Input placeholder="Change your dish name here" />
+              </div>
+              <div aria-label="Dish category editor" className="flex gap-4">
+                {" "}
+                <p> Dish category</p>
+                <Select>
+                  <SelectTrigger className="w-[180px]">
+                    <SelectValue placeholder="Select a category" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectGroup>
+                      <SelectLabel>Fruits</SelectLabel>
+                      <SelectItem value="apple">Apple</SelectItem>
+                      <SelectItem value="banana">Banana</SelectItem>
+                      <SelectItem value="blueberry">Blueberry</SelectItem>
+                      <SelectItem value="grapes">Grapes</SelectItem>
+                      <SelectItem value="pineapple">Pineapple</SelectItem>
+                    </SelectGroup>
+                  </SelectContent>
+                </Select>
+              </div>
+              <div aria-label="Ingredients editor" className="flex gap-4">
+                <p> Ingredients</p>
+                <Input placeholder="Change your dish name here" />
+              </div>
+              <div aria-label="Price editor" className="flex gap-4">
+                {" "}
+                <p> Price</p>
+                <Input placeholder="Change your dish name here" />
+              </div>
+              <div aria-label="Image editor" className="flex gap-4"></div>
+            </div>
+
+            <DialogFooter className="flex justify-between">
+              <DialogClose asChild>
+                <Button variant="outline" className="cursor-pointer">
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="13"
+                    height="15"
+                    viewBox="0 0 13 15"
+                    fill="none"
+                  >
+                    <path
+                      d="M0.5 3.16667H12.5M11.1667 3.16667V12.5C11.1667 13.1667 10.5 13.8333 9.83333 13.8333H3.16667C2.5 13.8333 1.83333 13.1667 1.83333 12.5V3.16667M3.83333 3.16667V1.83333C3.83333 1.16667 4.5 0.5 5.16667 0.5H7.83333C8.5 0.5 9.16667 1.16667 9.16667 1.83333V3.16667"
+                      stroke="#EF4444"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Button>
+              </DialogClose>
+              <Button type="submit" className="rounded-lg">
+                Save changes
+              </Button>
+            </DialogFooter>
+          </DialogContent>
+        </Dialog>
       </div>
     </div>
   );

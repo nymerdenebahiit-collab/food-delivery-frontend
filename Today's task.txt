@@ -1,0 +1,10 @@
+3rd of December, today's task: 
+
+1. Replace all the form with Dialog from ShadCN
+
+2. Remove the background blur (Since it comes naturally with ShadCN dialog)
+
+3. map() all Card, and Order contents
+
+
+Must start working solely on backend by finishing today's task and working on backend
