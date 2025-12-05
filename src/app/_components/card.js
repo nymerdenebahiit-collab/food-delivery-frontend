@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { Label } from "@/components/ui/label";
 
 export const Card = ({
   isAdmin,
@@ -132,15 +133,18 @@ export const Card = ({
                 Dishes info
               </DialogTitle>
             </DialogHeader>
-            <div className="flex flex-col gap-3">
+            <div className="grid grid-row-5 gap-3  ">
               <div aria-label="Dish name editor" className="flex gap-4">
-                <p> Dish name</p>
-                <Input placeholder="Change your dish name here" />
+                <Label> Dish name</Label>
+                <Input
+                  placeholder="Change your dish name here"
+                  className="w-72"
+                />
               </div>
               <div aria-label="Dish category editor" className="flex gap-4">
                 {" "}
-                <p> Dish category</p>
-                <Select>
+                <Label> Dish category</Label>
+                <Select className="w-72">
                   <SelectTrigger className="w-[180px]">
                     <SelectValue placeholder="Select a category" />
                   </SelectTrigger>
@@ -157,15 +161,30 @@ export const Card = ({
                 </Select>
               </div>
               <div aria-label="Ingredients editor" className="flex gap-4">
-                <p> Ingredients</p>
-                <Input placeholder="Change your dish name here" />
+                <Label> Ingredients</Label>
+                <Input
+                  placeholder="Change your dish name here"
+                  className="w-72"
+                />
               </div>
               <div aria-label="Price editor" className="flex gap-4">
                 {" "}
-                <p> Price</p>
-                <Input placeholder="Change your dish name here" />
+                <Label> Price</Label>
+                <Input
+                  placeholder="Change your dish name here"
+                  className="w-72"
+                />
               </div>
-              <div aria-label="Image editor" className="flex gap-4"></div>
+              <div aria-label="Image editor" className="flex gap-4">
+                <Label> Image</Label>
+
+                {/* <Image
+                  src=""
+                  alt=""
+                  className="w-72 p-4 bg-center bg-no-repeat"
+                /> */}
+                <div className="w-72 p-4 bg-center bg-no-repeat bg-red-500"></div>
+              </div>
             </div>
 
             <DialogFooter className="flex justify-between">

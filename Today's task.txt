@@ -8,3 +8,14 @@
 
 
 Must start working solely on backend by finishing today's task and working on backend
+
+
+
+
+
+
+1) Proivder
+
+A. Write all API-related codes inside your Providers
+
+

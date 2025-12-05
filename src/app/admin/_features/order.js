@@ -49,33 +49,76 @@ export const Order = () => {
     console.log("This handleDeliveryButton is working");
   };
 
-  const header = [
-    {
-      key: "checkbox",
-      content: <Checkbox className="border-[#09090B] cursor-pointer" />,
-    },
-    { key: "number", content: `№` },
-    { key: "customer", content: `Customer` },
-    { key: "food", content: `Food` },
-    { key: "date", content: `Date` },
-    { key: "cost amount", content: `Total` },
-    { key: "address", content: `Delivery Address` },
-    { key: "status", content: `Delivery State` },
-  ];
+  const header = {
+    key: "header-row",
+    checkboxRow: <Checkbox className="border-[#09090B] cursor-pointer" />,
+    customerNumberInLineRow: `№`,
+    customersRow: `Customer`,
+    foodRow: `Food`,
+    dateRow: `Date`,
+    totalCostRow: `$19.00`,
+    addressRow: `Delivery Address`,
+    statusRow: <Button>Delivery State</Button>,
+  };
 
   const dummyData = [
     {
-      key: "checkbox",
-      content: <Checkbox className="border-[#09090B] cursor-pointer" />,
-    },
-    { key: "number", content: `1` },
-    { key: "customer", content: `Naraa` },
-    {
-      key: "food",
-      content: (
+      key: "row-1",
+      checkbox: <Checkbox className="border-[#09090B] cursor-pointer" />,
+      customerNumberInLine: `1`,
+      customerEmail: `Naraa`,
+      food: (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">Open</Button>
+            <Button
+              variant="outline"
+              className="bg-transparent shadow-none flex items-center gap-4 cursor-pointer"
+            >
+              Open
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="9"
+                height="5"
+                viewBox="0 0 5"
+                fill="none"
+              >
+                <path
+                  d="M0.5 0.5L4.5 4.5L8.5 0.5"
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent className="w-56">
+            <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      ),
+      date: `2024/12/20`,
+      totalCost: `$19.00`,
+      address: `2024/12/СБД, 12-р хороо, СБД нэгдсэн эмнэлэг Sbd negdsen`,
+      status: (
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline">
+              <p>Pending</p>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                viewBox="0 0 16 16"
+                fill="none"
+              >
+                <path
+                  d="M4.66797 10.0001L8.0013 13.3334L11.3346 10.0001M4.66797 6.00008L8.0013 2.66675L11.3346 6.00008"
+                  stroke="#09090B"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent className="w-56">
             <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
@@ -83,24 +126,17 @@ export const Order = () => {
         </DropdownMenu>
       ),
     },
-    { key: "date", content: `2024/12/20` },
-    { key: "cost amount", content: `$19.00` },
+
     {
-      key: "address",
-      content: `2024/12/СБД, 12-р хороо, СБД нэгдсэн эмнэлэг Sbd negdsen `,
-    },
-    {
-      key: "status",
-      content: (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="outline">Open</Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent className="w-56">
-            <DropdownMenuLabel>Panel Position</DropdownMenuLabel>
-          </DropdownMenuContent>
-        </DropdownMenu>
-      ),
+      key: "row-2",
+      checkbox: <Checkbox className="border-[#09090B] cursor-pointer" />,
+      customerNumberInLine: `2`,
+      customerEmail: `John`,
+      food: <span>Pizza</span>,
+      date: `2024/12/21`,
+      totalCost: `$25.00`,
+      address: `123 Main St`,
+      status: <span>Delivered</span>,
     },
   ];
 
@@ -149,27 +185,36 @@ export const Order = () => {
           </div>
         </div>
 
-        <div
-          aria-label="Table-row and their details"
-          className="grid grid-cols-8 grid-rows-12 bg-[#E4E4E7]"
-        >
-          {header.map((item) => (
-            <div
-              key={item.key}
-              className="text-sm text-[#71717A] font-medium p-4 "
-            >
-              {item.content}
-            </div>
-          ))}
+        <div className="grid grid-cols-8 w-fit w-fit h-fit bg-[#E4E4E7] items-center">
+          <div className="p-4 flex items-center">{header.checkboxRow}</div>
+          <div className="p-4 w-14 flex items-center">
+            {header.customerNumberInLineRow}
+          </div>
+          <div className="p-4 flex items-center">{header.customersRow}</div>
+          <div className="p-4 flex">{header.foodRow}</div>
+          <div className="p-4 flex items-center">{header.dateRow}</div>
+          <div className="p-4 flex items-center">{header.totalCostRow}</div>
+          <div className="px-4 py-3 flex items-center overflow-hidden">
+            {header.addressRow}
+          </div>
+          <div className="px-4 py-3">{header.statusRow}</div>
 
           {dummyData.map((item) => (
-            <div className="p-4 flex items-center" key={item.key}>
-              {item.content}{" "}
-            </div>
+            <React.Fragment key={item.key}>
+              <div className="p-4 flex items-center">{item.checkbox}</div>
+              <div className="p-4 w-14 flex items-center">
+                {item.customerNumberInLine}
+              </div>
+              <div className="p-4 flex items-center">{item.customerEmail}</div>
+              <div className="p-4 flex">{item.food}</div>
+              <div className="p-4 flex items-center">{item.date}</div>
+              <div className="p-4 flex items-center">{item.totalCost}</div>
+              <div className="px-4 py-3 flex items-center overflow-hidden">
+                {item.address}
+              </div>
+              <div className="px-4 py-3">{item.status}</div>
+            </React.Fragment>
           ))}
-          {/* {dummyData.map((item) => (
-            <div key={item.key}>{item.content} </div>
-          ))} */}
         </div>
       </div>
 
