@@ -15,6 +15,7 @@ import {
   DialogFooter,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { useFoodCategory } from "../_provider/foodCategoryProvider";
 
 const Admin = () => {
   const [orderMenu, setOrderMenu] = useState(true);
@@ -24,6 +25,7 @@ const Admin = () => {
   const [deliveryButtonClicked, setDeliveryButtonClicked] = useState(false);
   const [addDishClicked, setAddDishClicked] = useState(false);
   const [isEditDishClicked, setEditDishClicked] = useState(false);
+  const { categories, loading, createCategory } = useFoodCategory();
 
   const router = useRouter();
   const goToHomePage = () => {
@@ -32,16 +34,7 @@ const Admin = () => {
   return (
     <>
       <div
-        className={`w-max flex relative ${
-          activePopUpMenu
-            ? `blur-sm opacity-75`
-            : deliveryButtonClicked
-            ? `blur-sm opacity-75`
-            : addDishClicked
-            ? `blur-sm opacity-75`
-            : isEditDishClicked
-            ? `blur-sm opacity-75`
-            : ``
+        className={`w-max flex relative 
         }`}
       >
         <div
@@ -164,6 +157,9 @@ const Admin = () => {
             setAddDishClicked={setAddDishClicked}
             isEditDishClicked={isEditDishClicked}
             setEditDishClicked={setEditDishClicked}
+            loading={loading}
+            categories={categories}
+            createCategory={createCategory}
           />
         )}
         {orderMenu && !foodMenu && (

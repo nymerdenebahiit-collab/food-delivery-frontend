@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { useFoodCategory } from "../../_provider/foodCategoryProvider";
 
 export const FoodMenu = ({
   activePopUpMenu,
@@ -24,10 +25,13 @@ export const FoodMenu = ({
   setAddDishClicked,
   isEditDishClicked,
   setEditDishClicked,
+  loading,
+  categories,
+  createCategory,
 }) => {
   const [totalFoodNumber, setTotalFoodNumber] = useState(0);
   // For now, using hard code for categoryies. Later on, it needs to be dynamic, and added or removed from backend
-  const [categories, setCategories] = useState([
+  const [dummyCategories, setCategories] = useState([
     { id: 1, nameOfCategory: `Appetizers` },
     { id: 2, nameOfCategory: `Salads` },
   ]);
@@ -67,7 +71,7 @@ export const FoodMenu = ({
               className="rounded-full px-4 py-2 border border-[#71717A] flex gap-2 w-fit cursor-pointer"
               key={id}
             >
-              {category.nameOfCategory}
+              {dummyCategories.nameOfCategory}
               <div className="bg-[#18181B] text-[12px] font-semibold rounded-full px-2.5 text-[#FAFAFA] py-0.5">
                 {totalFoodNumber}
               </div>
@@ -121,7 +125,11 @@ export const FoodMenu = ({
               <Input type="category name" placeholder="Type category name.." />
               <DialogFooter>
                 <DialogClose asChild></DialogClose>
-                <Button type="submit" className="rounded-md">
+                <Button
+                  type="submit"
+                  className="rounded-md"
+                  onClick={createCategory}
+                >
                   Add category
                 </Button>
               </DialogFooter>
