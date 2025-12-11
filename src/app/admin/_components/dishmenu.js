@@ -1,5 +1,8 @@
+"use client";
+
 import { Card } from "@/app/_components/card";
 import { useState } from "react";
+import { useFoodCategory } from "../../_provider/foodCategoryProvider"; // Changed: Import from foodCategoryProvider
 
 import { Button } from "@/components/ui/button";
 import {
@@ -18,12 +21,21 @@ import { Textarea } from "@/components/ui/textarea";
 
 export const Dishmenu = ({
   title,
+  categoryId,
   foodCounter,
   addDishClicked,
   setAddDishClicked,
+  isEditDishClicked,
+  setEditDishClicked,
 }) => {
+  const { foods, loading, createFood } = useFoodCategory();
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(true);
+
+  const [foodName, setFoodName] = useState("");
+  const [price, setPrice] = useState("");
+  const [ingredients, setIngredients] = useState("");
+  const [image, setImage] = useState("");
 
   const [cards, setCards] = useState([
     {
@@ -69,6 +81,38 @@ export const Dishmenu = ({
     setAddDishClicked(!addDishClicked);
     console.log(`This AddDish button is working`);
   };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!foodName.trim() || !price || !ingredients.trim()) {
+      console.error("All fields are required");
+      return;
+    }
+
+    try {
+      const foodData = {
+        foodName,
+        price: Number(price),
+        ingredients,
+        category: categoryId,
+        image: image || "",
+      };
+
+      console.log("Creating food:", foodData);
+      await createFood(foodData);
+      console.log("Food created successfully!");
+
+      setFoodName("");
+      setPrice("");
+      setIngredients("");
+      setImage("");
+      setAddDishClicked(false);
+    } catch (err) {
+      console.error("Failed to create food", err);
+    }
+  };
+
   return (
     <div className="bg-[#FFF] flex flex-col gap-4 p-5 rounded-xl">
       <div className="flex gap-2 text-[#09090B] font-semibold text-xl">
@@ -104,7 +148,7 @@ export const Dishmenu = ({
             </svg>
           </div>
           <p className="text-[#18181B] text-sm font-normal">
-            Add new Dish to Appetizers
+            Add new Dish to {title}
           </p>
         </button>
         {cards.slice(0, hardLimit).map((contentsOfCard, index) => (
@@ -123,49 +167,59 @@ export const Dishmenu = ({
         open={addDishClicked}
         onOpenChange={setAddDishClicked}
       >
-        <form>
-          <DialogContent className="sm:max-w-115">
+        <DialogContent className="sm:max-w-115">
+          <form onSubmit={handleSubmit}>
             <div
               aria-label="The form that adds dishes"
               className=" bg-[#FFF] rounded-xl flex flex-col gap-6"
             >
               <DialogTitle>
-                {" "}
                 <div aria-label="Header" className="flex justify-between">
-                  {" "}
                   <p className="text-lg text-[#09090B ] font-semibold">
-                    Add new Dish to Appetizers
+                    Add new Dish to {title}
                   </p>
                 </div>
               </DialogTitle>
 
               <div className="flex gap-6">
-                {" "}
                 <div className="flex flex-col gap-2">
                   <p className="text-sm text-[#09090B] font-medium">
                     Food name
                   </p>
-                  <Input type="Food name" placeholder="Type food name" />
+                  <Input
+                    type="text"
+                    placeholder="Type food name"
+                    value={foodName}
+                    onChange={(e) => setFoodName(e.target.value)}
+                  />
                 </div>
                 <div className="flex flex-col gap-2">
                   <p className="text-sm text-[#09090B] font-medium">
                     Food price
                   </p>
-                  <Input type="Food price" placeholder="Enter price..." />
+                  <Input
+                    type="number"
+                    placeholder="Enter price..."
+                    value={price}
+                    onChange={(e) => setPrice(e.target.value)}
+                  />
                 </div>
               </div>
               <div className="flex flex-col gap-2">
                 <p className="text-sm text-[#09090B] font-medium">
                   Ingredients
                 </p>
-                <Textarea placeholder="List ingredients.." />
+                <Textarea
+                  placeholder="List ingredients.."
+                  value={ingredients}
+                  onChange={(e) => setIngredients(e.target.value)}
+                />
               </div>
               <div
                 aria-label="Image dropzone"
                 onDrop={(e) => {
                   e.preventDefault();
                   const droppedFiles = Array.from(e.dataTransfer.files);
-                  handleDrop(droppedFiles);
                 }}
                 onDragOver={(e) => {
                   e.preventDefault();
@@ -198,20 +252,31 @@ export const Dishmenu = ({
                   accept="image/*"
                   onChange={(e) => {
                     if (e.target.files) {
-                      handleDrop(Array.from(e.target.files));
                     }
                   }}
                   className="hidden"
                   id="file-upload"
                 />
               </div>
-              <Button className="ml-81 w-fit px-4 py-2 h-10 flex items-center justify-center cursor-pointer">
-                {" "}
-                Add dish{" "}
-              </Button>
+              <DialogFooter>
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setAddDishClicked(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  className="w-fit px-4 py-2 h-10 flex items-center justify-center cursor-pointer"
+                  disabled={loading}
+                >
+                  {loading ? "Adding..." : "Add dish"}
+                </Button>
+              </DialogFooter>
             </div>
-          </DialogContent>
-        </form>
+          </form>
+        </DialogContent>
       </Dialog>
     </div>
   );

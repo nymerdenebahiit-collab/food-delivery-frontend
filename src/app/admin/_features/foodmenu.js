@@ -25,23 +25,34 @@ export const FoodMenu = ({
   setAddDishClicked,
   isEditDishClicked,
   setEditDishClicked,
-  loading,
-  categories,
-  createCategory,
 }) => {
   const [totalFoodNumber, setTotalFoodNumber] = useState(0);
-  // For now, using hard code for categoryies. Later on, it needs to be dynamic, and added or removed from backend
-  const [dummyCategories, setCategories] = useState([
-    { id: 1, nameOfCategory: `Appetizers` },
-    { id: 2, nameOfCategory: `Salads` },
-  ]);
+  const { categories, loading, createCategory } = useFoodCategory();
+  const [newCategoryName, setNewCategoryName] = useState("");
 
   const [foodCounter, setFoodCounter] = useState(0);
 
-  const [totalCategoryNumber, setTotalCategoryNumber] = useState(0);
-
   const addCategory = () => {
     setActivePopUpMenu(!activePopUpMenu);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!newCategoryName.trim()) {
+      console.error("Category name is required");
+      return;
+    }
+
+    try {
+      console.log("Creating category:", newCategoryName);
+      await createCategory(newCategoryName);
+      console.log("Category created successfully!");
+      setNewCategoryName("");
+      setActivePopUpMenu(false);
+    } catch (err) {
+      console.error("Failed to create category", err);
+    }
   };
 
   return (
@@ -58,7 +69,6 @@ export const FoodMenu = ({
         <div
           aria-label="Category button grid"
           className="grid grid-cols-6 gap-3 w-fit"
-          // Fix the gap distance between the buttons
         >
           <button className="rounded-full px-4 py-2 border border-[#EF4444] flex gap-2 w-fit cursor-pointer">
             All Dishes
@@ -66,12 +76,12 @@ export const FoodMenu = ({
               {totalFoodNumber}
             </div>
           </button>
-          {categories.map((category, id) => (
+          {categories.map((category) => (
             <button
               className="rounded-full px-4 py-2 border border-[#71717A] flex gap-2 w-fit cursor-pointer"
-              key={id}
+              key={category._id}
             >
-              {dummyCategories.nameOfCategory}
+              {category.categoryName}
               <div className="bg-[#18181B] text-[12px] font-semibold rounded-full px-2.5 text-[#FAFAFA] py-0.5">
                 {totalFoodNumber}
               </div>
@@ -100,41 +110,51 @@ export const FoodMenu = ({
         </div>
       </div>
       <div aria-label="The dishes" className="flex flex-col gap-5 mx-6">
-        <Dishmenu
-          title="Appetizers"
-          foodCounter={foodCounter}
-          addDishClicked={addDishClicked}
-          setAddDishClicked={setAddDishClicked}
-          setEditDishClicked={setEditDishClicked}
-          isEditDishClicked={isEditDishClicked}
-        />
-        <Dishmenu title="Salads" foodCounter={foodCounter} />
+        {categories.map((category) => (
+          <Dishmenu
+            key={category._id}
+            title={category.categoryName}
+            categoryId={category._id}
+            foodCounter={foodCounter}
+            addDishClicked={addDishClicked}
+            setAddDishClicked={setAddDishClicked}
+            setEditDishClicked={setEditDishClicked}
+            isEditDishClicked={isEditDishClicked}
+          />
+        ))}
 
         <Dialog
           aria-label="Add Category"
           open={activePopUpMenu}
           onOpenChange={setActivePopUpMenu}
         >
-          <form>
-            <DialogContent className="w-115">
+          <DialogContent className="w-115">
+            <form onSubmit={handleSubmit}>
               <DialogHeader>
                 <DialogTitle className="text-lg text-[#09090B] font-semibold">
                   Add new category
                 </DialogTitle>
               </DialogHeader>
-              <Input type="category name" placeholder="Type category name.." />
+              <Input
+                type="text"
+                placeholder="Type category name.."
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+              />
               <DialogFooter>
-                <DialogClose asChild></DialogClose>
                 <Button
-                  type="submit"
-                  className="rounded-md"
-                  onClick={createCategory}
+                  type="button"
+                  variant="outline"
+                  onClick={() => setActivePopUpMenu(false)}
                 >
-                  Add category
+                  Cancel
+                </Button>
+                <Button type="submit" className="rounded-md" disabled={loading}>
+                  {loading ? "Adding..." : "Add category"}
                 </Button>
               </DialogFooter>
-            </DialogContent>
-          </form>
+            </form>
+          </DialogContent>
         </Dialog>
       </div>
     </div>
