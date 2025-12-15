@@ -2,19 +2,13 @@
 
 import { useState } from "react";
 import { Order } from "../_features/order";
+import { useAdminContext } from "../../_provider/adminProvider";
 
-export const DeliveryBadge = ({
-  deliveryBadgeClicked,
-  setDeliveryBadgeClicked,
-}) => {
-  const [pending, setPending] = useState(false);
-  const [delivered, setDelivered] = useState(false);
-  const [cancelled, setCancelled] = useState(false);
+export const DeliveryBadge = ({}) => {
 
-  const badgeClicked = () => {
-    setDeliveryBadgeClicked(!deliveryBadgeClicked);
-    console.log(`This button is working`);
-  };
+
+  const { badgeClicked, pending, delivered, cancelled } = useAdminContext();
+
   return (
     <>
       <button

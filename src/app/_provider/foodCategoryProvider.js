@@ -5,7 +5,7 @@ import React from "react";
 
 const FoodCategoryContext = createContext(null); //Creates providier
 
-export const useFoodCategory = () => {
+export const useFoodCategoryContext = () => {
   const context = useContext(FoodCategoryContext);
   if (!context) {
     throw new Error(

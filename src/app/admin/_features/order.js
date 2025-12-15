@@ -2,16 +2,12 @@
 import { useState } from "react";
 import * as React from "react";
 import { Checkbox } from "@/components/ui/checkbox";
-import { DeliveryBadge } from "../_components/deliverybadge";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
-  DropdownMenuItem,
   DropdownMenuLabel,
-  DropdownMenuSeparator,
   DropdownMenuTrigger,
-  DropdownMenuRadioItem,
-  DropdownMenuRadioGroup,
 } from "@/components/ui/dropdown-menu";
 import {
   Pagination,
@@ -25,29 +21,23 @@ import {
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
-  DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Ham } from "lucide-react";
+
+import { useAdminContext } from "@/app/_provider/adminProvider";
 
 export const Order = () => {
   const [totalItems, setTotalItems] = useState(0);
-  const [totalOrders, setTotalOrders] = useState(1);
-  const [deliveryBadgeClicked, setDeliveryBadgeClicked] = useState(false);
-  const [isDeliveryButtonClicked, setIsDeliveryButtonClicked] = useState(false);
   const [position, setPosition] = React.useState("bottom");
 
-  const handleDeliveryButton = () => {
-    setIsDeliveryButtonClicked(!isDeliveryButtonClicked);
-    console.log("This handleDeliveryButton is working");
-  };
+  const {
+    handleDeliveryButton,
+    isDeliveryButtonClicked,
+    setIsDeliveryButtonClicked,
+  } = useAdminContext();
 
   const header = {
     key: "header-row",

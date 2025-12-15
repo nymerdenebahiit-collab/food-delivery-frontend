@@ -8,27 +8,15 @@ import {
   Dialog,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useFoodCategory } from "../../_provider/foodCategoryProvider";
+import { useAdminContext } from "@/app/_provider/adminProvider";
+import { useFoodCategoryContext } from "../../_provider/foodCategoryProvider";
 
-export const FoodMenu = ({
-  activePopUpMenu,
-  setActivePopUpMenu,
-  addDishClicked,
-  setAddDishClicked,
-  isEditDishClicked,
-  setEditDishClicked,
-  loading,
-  categories,
-  createCategory,
-}) => {
+export const FoodMenu = ({ title }) => {
   const [totalFoodNumber, setTotalFoodNumber] = useState(0);
   // For now, using hard code for categoryies. Later on, it needs to be dynamic, and added or removed from backend
   const [dummyCategories, setCategories] = useState([
@@ -36,13 +24,15 @@ export const FoodMenu = ({
     { id: 2, nameOfCategory: `Salads` },
   ]);
 
-  const [foodCounter, setFoodCounter] = useState(0);
+  const {
+    foodCounter,
+    addCategory,
+    createCategory,
+    activePopUpMenu,
+    setActivePopUpMenu,
+  } = useAdminContext();
 
-  const [totalCategoryNumber, setTotalCategoryNumber] = useState(0);
-
-  const addCategory = () => {
-    setActivePopUpMenu(!activePopUpMenu);
-  };
+  const { loading, categories } = useFoodCategoryContext();
 
   return (
     <div
@@ -102,11 +92,11 @@ export const FoodMenu = ({
       <div aria-label="The dishes" className="flex flex-col gap-5 mx-6">
         <Dishmenu
           title="Appetizers"
-          foodCounter={foodCounter}
-          addDishClicked={addDishClicked}
-          setAddDishClicked={setAddDishClicked}
-          setEditDishClicked={setEditDishClicked}
-          isEditDishClicked={isEditDishClicked}
+          // foodCounter={foodCounter}
+          // addDishClicked={addDishClicked}
+          // setAddDishClicked={setAddDishClicked}
+          // setEditDishClicked={setEditDishClicked}
+          // isEditDishClicked={isEditDishClicked}
         />
         <Dishmenu title="Salads" foodCounter={foodCounter} />
 

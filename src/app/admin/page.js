@@ -1,31 +1,11 @@
 "use client";
-
-import { useState } from "react";
 import { FoodMenu } from "./_features/foodmenu";
 import { Order } from "./_features/order";
 import { useRouter } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogFooter,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
-import { useFoodCategory } from "../_provider/foodCategoryProvider";
+import { useAdminContext } from "../_provider/adminProvider";
 
 const Admin = () => {
-  const [orderMenu, setOrderMenu] = useState(true);
-  const [foodMenu, setFoodMenu] = useState(false);
-  const [activePopUpMenu, setActivePopUpMenu] = useState(false);
-  const [deliveryBadgeClicked, setDeliveryBadgeClicked] = useState(false);
-  const [deliveryButtonClicked, setDeliveryButtonClicked] = useState(false);
-  const [addDishClicked, setAddDishClicked] = useState(false);
-  const [isEditDishClicked, setEditDishClicked] = useState(false);
-  const { categories, loading, createCategory } = useFoodCategory();
+  const { setOrderMenu, setFoodMenu, orderMenu, foodMenu } = useAdminContext();
 
   const router = useRouter();
   const goToHomePage = () => {
@@ -149,27 +129,8 @@ const Admin = () => {
           </div>
         </div>
 
-        {foodMenu && !orderMenu && (
-          <FoodMenu
-            activePopUpMenu={activePopUpMenu}
-            setActivePopUpMenu={setActivePopUpMenu}
-            addDishClicked={addDishClicked}
-            setAddDishClicked={setAddDishClicked}
-            isEditDishClicked={isEditDishClicked}
-            setEditDishClicked={setEditDishClicked}
-            loading={loading}
-            categories={categories}
-            createCategory={createCategory}
-          />
-        )}
-        {orderMenu && !foodMenu && (
-          <Order
-            deliveryBadgeClicked={deliveryBadgeClicked}
-            setDeliveryBadgeClicked={setDeliveryBadgeClicked}
-            deliveryButtonClicked={deliveryButtonClicked}
-            setDeliveryButtonClicked={setDeliveryButtonClicked}
-          />
-        )}
+        {foodMenu && !orderMenu && <FoodMenu />}
+        {orderMenu && !foodMenu && <Order />}
       </div>
     </>
   );

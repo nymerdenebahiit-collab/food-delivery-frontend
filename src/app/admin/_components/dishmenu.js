@@ -2,28 +2,21 @@ import { Card } from "@/app/_components/card";
 import { useState } from "react";
 
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogClose,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { useAdminContext } from "@/app/_provider/adminProvider";
 
-export const Dishmenu = ({
-  title,
-  foodCounter,
-  addDishClicked,
-  setAddDishClicked,
-}) => {
+export const Dishmenu = ({ title }) => {
   const [isAdmin, setIsAdmin] = useState(false);
   const [isAddedToCart, setIsAddedToCart] = useState(true);
+  const {
+    foodCounter,
+    addDishClicked,
+    setAddDishClicked,
+    addDish,
+    setActivePopMenu,
+  } = useAdminContext();
 
   const [cards, setCards] = useState([
     {
@@ -65,10 +58,10 @@ export const Dishmenu = ({
 
   const [hardLimit, setHardLimit] = useState(6);
 
-  const addDish = () => {
-    setAddDishClicked(!addDishClicked);
-    console.log(`This AddDish button is working`);
-  };
+  // const addDish = () => {
+  //   setAddDishClicked(!addDishClicked);
+  //   console.log(`This AddDish button is working`);
+  // };
   return (
     <div className="bg-[#FFF] flex flex-col gap-4 p-5 rounded-xl">
       <div className="flex gap-2 text-[#09090B] font-semibold text-xl">
